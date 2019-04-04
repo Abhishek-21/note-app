@@ -21,9 +21,6 @@
         e.preventDefault();
   })
  
-    if (document.readyState == "complete") {
-        console.log("Your page is loaded");
-    }
 
     $(document).ready( function() {
         refreshNoteList();
@@ -66,15 +63,28 @@
                 edit.className = 'box-design-edit';
                 close.className = 'box-design';
                 close.addEventListener('click',(e) => {                                          // soft-delete feature from here
-                    // console.log(e.target.className);
-                    if(e.path[3].className.indexOf('soft-delete') !== -1 ){
-                        e.path[3].className = 'new-task-container';
+                    if(e.target.className === 'fa fa-close' || e.target.className === 'fa fa-undo'){
+                        if(e.target.parentNode.parentNode.parentNode.className.indexOf("soft-delete") === -1) {
+                            e.target.parentNode.parentNode.parentNode.className = 'soft-delete new-task-container';
+                            e.target.className = 'fa fa-undo';
+                        }
+                        else {
+                            e.target.parentNode.parentNode.parentNode.className = 'new-task-container';
+                            e.target.className = 'fa fa-close';
+                        }
                     }
                     else {
-                        e.path[3].className = 'soft-delete new-task-container';
+                        if(e.target.parentNode.parentNode.className.indexOf("soft-delete") === -1) {
+                            e.target.parentNode.parentNode.className = 'soft-delete new-task-container';
+                            e.target.firstChild.className = 'fa fa-undo';                      
+                        }
+                        else {
+                            e.target.parentNode.parentNode.className = 'new-task-container';
+                            e.target.firstChild.className = 'fa fa-close';    
+                        }
                     }
-                    
                 })
+                
                 edit.addEventListener('click',(e) => {                                          // edit feature of note pads starts here
                     innerContainer.style.display = 'block';
                     comContainer.style.display = 'none';
