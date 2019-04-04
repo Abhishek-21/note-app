@@ -35,6 +35,25 @@ app.get('/note',(req,res) => {                                     // setting up
     })
 })
 
+app.put('/note',(req,res) => {                                     // setting up new route hanlder for get request 
+    var conditions = { _id: req.body._id }
+    , update = { $set: { message: req.body.message, updated: req.body.updated }}
+    , options = { multi: true };
+  
+    NewTask.update(conditions, update, options, callback);
+  
+  function callback (err, numAffected) {
+    // numAffected is the number of updated documents
+    if(err) {
+        res.send('error');
+    }
+    else {
+        res.status(202).send(numAffected);
+    }
+  }
+})
+
+
 app.delete('/note',(req,res) => {                                   // deleting note request 
     NewTask.deleteOne({_id: req.body._id}).then((tasks) => {        //sending appropriate response 
         res.send(tasks)

@@ -86,23 +86,42 @@
                 })
                 
                 edit.addEventListener('click',(e) => {                                          // edit feature of note pads starts here
-                    innerContainer.style.display = 'block';
-                    comContainer.style.display = 'none';
-                    document.getElementById('noteContent').value = e.path[3].innerText;
-                    var check = '#'+e.path[3].id;                                               // sending Data in JSON form 
-                    let dataString = {
-                        _id: e.path[3].id
+                    // console.log(e.target.className);
+                    if(e.target.className === 'box-design-edit') {
+                        console.log(e.target.parentNode.parentNode.id);
+                        console.log(e.target.parentNode.nextSibling.innerHTML);
+                        innerContainer.style.display = 'block';
+                        comContainer.style.display = 'none';
+                        document.getElementById('noteContent').value = e.target.parentNode.nextSibling.innerHTML;
+                        document.getElementById('noteContent').className = e.target.parentNode.parentNode.id;  
+                        addNote.innerHTML = 'Update';                      
                     }
-                    dataString = JSON.stringify(dataString); 
-                    $(check).remove();
-                    $.ajax({
-                        type: "DELETE",                                                          //delete the nodes from ajax request
-                        contentType: "application/json",                                              
-                        url: "http://localhost:3000/note",             
-                        data: dataString,                                    
-                        success: function(response) {             
-                            }
-                    });
+                    else {
+                        console.log(e.target.parentNode.parentNode.parentNode.id);
+                        console.log(e.target.parentNode.parentNode.nextSibling.innerHTML);
+                        innerContainer.style.display = 'block';
+                        comContainer.style.display = 'none';
+                        document.getElementById('noteContent').value = e.target.parentNode.parentNode.nextSibling.innerHTML;
+                        document.getElementById('noteContent').className = e.target.parentNode.parentNode.parentNode.id;
+                        addNote.innerHTML = 'Update';                                          
+                    }
+                    // innerContainer.style.display = 'block';
+                    // comContainer.style.display = 'none';
+                    // document.getElementById('noteContent').value = e.path[3].innerText;
+                    // var check = '#'+e.path[3].id;                                               // sending Data in JSON form 
+                    // let dataString = {
+                    //     _id: e.path[3].id
+                    // }
+                    // dataString = JSON.stringify(dataString); 
+                    // $(check).remove();
+                    // $.ajax({
+                    //     type: "DELETE",                                                          //delete the nodes from ajax request
+                    //     contentType: "application/json",                                              
+                    //     url: "http://localhost:3000/note",             
+                    //     data: dataString,                                    
+                    //     success: function(response) {             
+                    //         }
+                    // });
                 })
                 divContainer2.appendChild(divTaskContainer);
                 divTaskContainer.appendChild(divTaskHeader);
@@ -122,33 +141,34 @@
         if(message.trim() === null || message.trim() === '') {                          // message if the iput field insn't blank 
             alert('Enter some description first');
         }
-        else if(message.indexOf('Edited on') !== -1 && message.indexOf('Updated on') !== -1 ) {
-            console.log(id[0]);
-            let newMessage = message.split('\n');                                       // message is formated here for editing one
-            var editDate = newMessage[0].split(':')[1];
-            var messageNew = newMessage[1];
+        else if(addNote.innerHTML === 'Update') {
+            var id = document.getElementById('noteContent').className;
+            console.log(id);
             var day = new Date().getDate();
             var month = new Date().getMonth();
             var year = new Date().getFullYear();
             let dataString = {
-                created: editDate,
-                message: messageNew,
+                _id: id,
+                message,
                 updated: day+'-'+month+'-'+year
             }
-            dataString = JSON.stringify(dataString);        
+            dataString = JSON.stringify(dataString);  
+            try {
             $.ajax({
-            type: "POST",                                                                   // posting data from ajax request
-            contentType: "application/json",                                              
-            url: "http://localhost:3000/note",             
-            data: dataString,                                    
-            success: function(response) {
-                console.log(response)
-                console.log("Form Submittion Successful");               
-                }
-            });
-            messageOri.value = '';      
-            console.log('hi');
-                                                                        // reseting the form feild to null
+                type: "PUT",                                                                   // posting data from ajax request
+                contentType: "application/json",                                              
+                url: "http://localhost:3000/note",             
+                data: dataString,                                    
+                success: function(response) {
+                    console.log("Form Updated Successfully");               
+                    }
+                });
+            } catch(e) {
+                console.log("request error")
+            }      
+            
+            addNote.innerHTML = 'Add';
+            messageOri.value = '';                    // reseting the form feild to null
         }
         else{
             var day = new Date().getDate();                                                         // entering the date in proper format
