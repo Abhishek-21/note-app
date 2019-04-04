@@ -1,0 +1,195 @@
+body {
+    background: url('dirty-pattern-paint-room-block_1203-5709.jpg');
+    background-position: cover;
+
+}
+#container {
+    width: 40%;
+    margin: 0% auto;
+    box-sizing: border-box;
+    border-radius: 15px;
+
+}
+#inner-container {
+    width: 100%;
+    color:white;
+    box-sizing: border-box;
+    background: rgba(2, 2, 1, 0.151);
+    border-radius: 15px;
+    display: none;
+    box-shadow: 5px 10px 8px 10px #888888;
+    margin: 30px 0;
+}
+#complementary-container {
+    width: 200px;
+    height: 200px;
+    background:rgba(230, 230, 150, 0);
+    margin: 30px auto;
+    border-radius: 50%;
+    cursor: pointer;
+    animation: spinBox 5s infinite;
+}
+
+#complementary-container table {
+   height: 200px;
+   width: 200px;
+   text-align: center;
+   font-size: 24px;
+   font-weight: bold;
+   box-shadow: 5px 10px 8px 10px #888888;
+}
+#header-main {
+    background: rgba(8, 8, 6, 0.158);
+    color: black;
+    text-align: right;
+    border-radius: 10px;
+    padding: 10px 0px;
+}
+.messageBody{
+    width: 99%;
+    margin: 2px auto;
+}
+#noteContent {
+    width: 100%;
+    height: 100px;
+    box-sizing: border-box;
+    padding: 10px;
+    font-weight: bold;
+    border-radius: 15px;
+    border: none;
+    resize: none;
+}
+#noteContent:focus {
+   outline: none;
+}
+#header-main span {
+    margin-right: 10px;
+    text-align: center;
+    cursor: pointer;
+}
+#header-main span:last-child {
+    background: rgba(255, 0, 0, 0.6);
+    padding:3px;
+    border-radius: 5px;
+}
+.footer {
+    text-align: center;
+}
+.footer span {
+    cursor: pointer;
+}
+#addNote,
+#clearNote {
+    background-color: brown;
+    border: none;
+    border-radius: 10px;
+    padding: 8px;
+    width: 80px;
+    color: white;
+    outline: none;
+    cursor: pointer;
+    margin-left: 10px;
+    font-weight: bold;
+}
+#addNote:hover,
+#clearNote:hover {
+    background-color: rgba(165, 42, 42, 0.767);
+}
+.new-task-container {
+    width: 280px;
+    height: 200px;
+    background: rgba(223, 116, 116, 0);
+    margin:30px 10px;
+    display: inline-block;
+    box-sizing: border-box;
+    border-radius: 10px;
+   box-shadow: 5px 10px 8px 10px #888888;
+
+}
+
+.task-header {
+    width: 100%;
+    height:15%;
+    background: rgba(0, 0, 0, 0.178);
+    box-sizing: border-box;
+    border-radius: 10px;
+    text-align: right;
+    padding: 5px;
+}
+.box-design {
+    width: 40px;
+    height: 40px;
+    background:rgba(255, 0, 0, 0.623);
+    font-weight: bold;
+    padding: 4px;
+    margin: 0px 5px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.box-design:hover {
+    background: rgba(255, 0, 0, 0.984);
+    color: white;
+}
+.box-design-edit,
+.box-design-drop {
+    width: 40px;
+    height: 40px;
+    font-weight: bold;
+    padding: 4px;
+    margin: 0px 5px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.box-design-edit:hover,
+.box-design-drop:hover {
+    color: white;
+}
+
+.task-message {
+    width: 98%;
+    height: 70%;
+    border-radius: 10px;
+    margin: 2px 3px;
+    font-weight: bold;
+    resize: none;
+    box-sizing: border-box;
+    padding:10px;
+    background: white;
+    color: rgb(110, 109, 109);
+    overflow: auto;
+}
+.task-footer {
+    width: 100%;
+    height:12%;
+    background: rgba(0, 0, 0, 0.178);
+    box-sizing: border-box;
+    border-radius: 10px;
+    text-align: right;
+    padding: 5px;
+    text-align: right;
+}
+.task-footer-details {
+    width: 100%;
+    height:25%;
+    background: rgba(243, 241, 241, 0.986);
+    box-sizing: border-box;
+    border-radius: 10px;
+    text-align: right;
+    padding: 5px;
+    text-align: right;
+}
+.soft-delete{
+    text-decoration: line-through;
+}
+.created-on,
+.updated-on {
+    font-size:12px;
+}
+@keyframes spinBox {
+    from{
+        transform: rotate(0deg);
+    }
+    to{
+        transform: rotate(360deg);
+    }
+}
