@@ -45,6 +45,7 @@
                 var id = document.createElement("SPAN");
                 var edit = document.createElement("SPAN");
                 var close = document.createElement("SPAN");
+                var deleteBox = document.createElement("SPAN");
                 divTaskContainer.className = 'new-task-container';                              // displaying dynamic data into the notes starts from here
                 divTaskContainer.id = success[i]._id;
                 divTaskHeader.className = 'task-header';
@@ -56,12 +57,14 @@
                 divTaskHeader.appendChild(close);
                 edit.innerHTML = '<i class="fa fa-edit"></i>';                                  // use of differnt fa fa icons
                 close.innerHTML = '<i class="fa fa-close"></i>';
+                deleteBox.innerHTML = '<i class="fa fa-trash"></i>';
                 updatedOn.innerHTML = 'Updated on: ' + success[i].updated;
                 createdOn.innerHTML = 'Edited on: ' + success[i].created;
                 createdOn.className = 'created-on';
                 updatedOn.className = 'updated-on';
                 edit.className = 'box-design-edit';
                 close.className = 'box-design';
+                deleteBox.className = 'box-delete';
                 close.addEventListener('click',(e) => {                                          // soft-delete feature from here
                     if(e.target.className === 'fa fa-close' || e.target.className === 'fa fa-undo'){
                         if(e.target.parentNode.parentNode.parentNode.className.indexOf("soft-delete") === -1) {
@@ -88,8 +91,6 @@
                 edit.addEventListener('click',(e) => {                                          // edit feature of note pads starts here
                     // console.log(e.target.className);
                     if(e.target.className === 'box-design-edit') {
-                        console.log(e.target.parentNode.parentNode.id);
-                        console.log(e.target.parentNode.nextSibling.innerHTML);
                         innerContainer.style.display = 'block';
                         comContainer.style.display = 'none';
                         document.getElementById('noteContent').value = e.target.parentNode.nextSibling.innerHTML;
@@ -97,37 +98,59 @@
                         addNote.innerHTML = 'Update';                      
                     }
                     else {
-                        console.log(e.target.parentNode.parentNode.parentNode.id);
-                        console.log(e.target.parentNode.parentNode.nextSibling.innerHTML);
                         innerContainer.style.display = 'block';
                         comContainer.style.display = 'none';
                         document.getElementById('noteContent').value = e.target.parentNode.parentNode.nextSibling.innerHTML;
                         document.getElementById('noteContent').className = e.target.parentNode.parentNode.parentNode.id;
                         addNote.innerHTML = 'Update';                                          
                     }
-                    // innerContainer.style.display = 'block';
-                    // comContainer.style.display = 'none';
-                    // document.getElementById('noteContent').value = e.path[3].innerText;
-                    // var check = '#'+e.path[3].id;                                               // sending Data in JSON form 
-                    // let dataString = {
-                    //     _id: e.path[3].id
-                    // }
-                    // dataString = JSON.stringify(dataString); 
-                    // $(check).remove();
-                    // $.ajax({
-                    //     type: "DELETE",                                                          //delete the nodes from ajax request
-                    //     contentType: "application/json",                                              
-                    //     url: "http://localhost:3000/note",             
-                    //     data: dataString,                                    
-                    //     success: function(response) {             
-                    //         }
-                    // });
-                })
+                   
+                });
+
+                deleteBox.addEventListener('click',(e) => {
+                    if(e.target.className === 'fa fa-trash'){
+                        id = e.target.parentNode.parentNode.parentNode.id;
+                        let dataString = {
+                            _id: id
+                        }
+                        dataString = JSON.stringify(dataString); 
+                        var check = '#'+id;                                               // sending Data in JSON form 
+                        $(check).remove();
+                        $.ajax({
+                            type: "DELETE",                                                          //delete the nodes from ajax request
+                            contentType: "application/json",                                              
+                            url: "http://localhost:3000/note",             
+                            data: dataString,                                    
+                            success: function(response) {             
+                                }
+                        });
+                    }
+                    else {
+                        id = e.target.parentNode.parentNode.id;
+                        let dataString = {
+                            _id: id
+                        }
+                        dataString = JSON.stringify(dataString); 
+                        var check = '#'+id;
+                        $(check).remove();
+                        $.ajax({
+                            type: "DELETE",                                                          //delete the nodes from ajax request
+                            contentType: "application/json",                                              
+                            url: "http://localhost:3000/note",             
+                            data: dataString,                                    
+                            success: function(response) {             
+                                }
+                        });
+                    }
+                });
+
                 divContainer2.appendChild(divTaskContainer);
                 divTaskContainer.appendChild(divTaskHeader);
                 divTaskContainer.appendChild(divTaskMessage);
                 divTaskContainer.appendChild(divTaskFooter);
                 divTaskFooter.appendChild(updatedOn);
+                divTaskFooter.appendChild(deleteBox);
+
             }              
             
         }
